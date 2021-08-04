@@ -8,6 +8,7 @@
 /data/*
 !/data/nginx/
 !/data/proxy/
+/data/arawa/cert/*
 /data/redis/db/*
 !/data/redis/
 

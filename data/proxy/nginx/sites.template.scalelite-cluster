@@ -5,10 +5,6 @@ upstream docker-scalelite-api {
     server scalelite-api-2:80 max_fails=3 fail_timeout=30s;
 }
 
-upstream docker-scalelite-recordings {
-    server scalelite-recordings-1:80  max_fails=3 fail_timeout=30s;
-    server scalelite-recordings-2:80  max_fails=3 fail_timeout=30s;
-}
 
 server {
     server_name $NGINX_HOSTNAME;
@@ -58,7 +54,6 @@ server {
     }
 
     location / {
-        proxy_pass  http://docker-scalelite-recordings;
 
         proxy_read_timeout 60s;
         proxy_redirect off;

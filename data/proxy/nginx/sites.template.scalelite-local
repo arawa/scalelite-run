@@ -4,10 +4,6 @@ upstream docker-scalelite-api {
     server $NGINX_HOSTNAME:3000;
 }
 
-upstream docker-scalelite-recordings {
-    server scalelite-recordings:80;
-}
-
 server {
     server_name $NGINX_HOSTNAME;
 
@@ -47,15 +43,6 @@ server {
         include /etc/nginx/sites-common;
     }
 
-    location /presentation/ {
-        proxy_pass  http://docker-scalelite-recordings;
-        include /etc/nginx/sites-common;
-    }
-
-    location /playback/ {
-        proxy_pass  http://docker-scalelite-recordings;
-        include /etc/nginx/sites-common;
-    }
 
     location / {
         proxy_pass http://docker-scalelite-api/health_check;
