@@ -1,4 +1,12 @@
-cat <<'EOF' | tee /etc/systemd/system/greenlight.service
+#!/bin/bash
+COMPOSE=""
+if [ "$1" == "storage" ]; then
+    echo "Setting with storage option"
+	COMPOSE=" -f docker-compose.recording.yml"
+else
+    echo "Setting without storage option"
+fi
+echo "
 [Unit]
 Description=Scalelite
 After=network-online.target
@@ -10,11 +18,14 @@ After=docker.service
 Type=oneshot
 RemainAfterExit=true
 WorkingDirectory=/root/scalelite
-ExecStart=/usr/local/bin/docker-compose up -d --remove-orphans
+ExecStart=/usr/local/bin/docker-compose up -d ${COMPOSE} --remove-orphans
+
 ExecStop=/usr/local/bin/docker-compose down
 
 [Install]
 WantedBy=multi-user.target
-EOF
+" > /etc/systemd/system/scalelite.service
 
-echo "Please do not forger to enable the service :) "
+systemctl enable scalelite
+service scalelite start
+service scalelite status
