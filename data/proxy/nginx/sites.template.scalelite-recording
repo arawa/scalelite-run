@@ -1,8 +1,13 @@
 #### For <$NGINX_HOSTNAME>
 
 upstream docker-scalelite-api {
-    server $NGINX_HOSTNAME:3000;
+    server scalelite-api:3000;
 }
+
+upstream docker-scalelite-recordings {
+	server scalelite-recordings:80;
+}
+
 
 server {
     server_name $NGINX_HOSTNAME;
@@ -28,7 +33,6 @@ server {
     ## Configuration for Letsencrypt SSL Certificate
     ssl_certificate /etc/letsencrypt/live/$NGINX_HOSTNAME/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/$NGINX_HOSTNAME/privkey.pem;
-
     ## Configuration for SSL Certificate from a CA other than LetsEncrypt
     #ssl_certificate /etc/ssl/fullchain.pem;
     #ssl_certificate_key /etc/ssl/privkey.pem;
@@ -42,6 +46,17 @@ server {
         proxy_pass  http://docker-scalelite-api;
         include /etc/nginx/sites-common;
     }
+
+	location /presentation/ {
+        proxy_pass  http://docker-scalelite-recordings;
+        include /etc/nginx/sites-common;
+    }
+
+    location /playback/ {
+        proxy_pass  http://docker-scalelite-recordings;
+        include /etc/nginx/sites-common;
+    }
+
 
 
     location / {

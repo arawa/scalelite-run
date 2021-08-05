@@ -4,9 +4,12 @@
 - `cp .env.example .env`
 - Customize `.env`
 - Set the correct rights to the log directory
-  - `chmod -R 660 log/`
+  - `chmod -R 777 log/`
 - When started, create the initial db
   - `docker exec -it scalelite-api bin/rake db:setup`
+- **If using the recording feature with SSL**
+  - Run the init-letsenctypt.sh script
+    - `bash ./init-letsenctypt.sh` and say "Yes" to the first prompt.
 
 
 ## Set as a systemd service
