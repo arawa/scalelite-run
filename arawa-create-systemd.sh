@@ -2,7 +2,7 @@
 COMPOSE=""
 if [ "$1" == "storage" ]; then
     echo "Setting with storage option"
-	COMPOSE=" -f docker-compose.recording.yml"
+	COMPOSE=" --file docker-compose.recording.yml"
 else
     echo "Setting without storage option"
 fi
@@ -18,7 +18,7 @@ After=docker.service
 Type=oneshot
 RemainAfterExit=true
 WorkingDirectory=/root/scalelite
-ExecStart=/usr/local/bin/docker-compose up -d ${COMPOSE} --remove-orphans
+ExecStart=/usr/local/bin/docker-compose ${COMPOSE} up -d --remove-orphans
 
 ExecStop=/usr/local/bin/docker-compose down
 
