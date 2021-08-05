@@ -3,6 +3,10 @@
 ## Getting started  
 - `cp .env.example .env`
 - Customize `.env`
+- Set the correct rights to the log directory
+  - `chmod -R 660 log/`
+- When started, create the initial db
+  - `docker exec -it scalelite-api bin/rake db:setup`
 
 
 ## Set as a systemd service
