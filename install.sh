@@ -1,7 +1,13 @@
 #!bin/bash
 
+# Custom certs
+printf "\n"
+echo -e "\e[33mBefore running this script, please put if needed the custom certs to the arawa dir :\e[39m"
+echo -e "\e[33mcp {fullchain.pem,privkey.pem} data/arawa/cert/\e[39m"
+printf "\n"
+
 # First, run the .env creation wizard
-./init-scripts/createEnv.sh
+bash ./init-scripts/createEnv.sh
 
 # chmod the log directory
 chmod -R 777 log/
@@ -10,13 +16,8 @@ chmod -R 777 log/
 echo -e "\e[36mUse Let's Encrypt ?(y/N) :\e[39m"
 read RUN_LETSENCRYPT
 if [[ "$RUN_LETSENCRYPT" == "y" ]] || [[ "$RUN_LETSENCRYPT" == "Y" ]]; then
-  ./init-scripts/init-letsencrypt.sh
+  bash ./init-scripts/init-letsencrypt.sh
 fi
-
-# Custom certs
-echo -e "\e[36mPlease copy if needed the custom certs :\e[39m"
-echo -e "\e[36mcp {fullchain.pem,privkey.pem} data/arawa/cert/\e[39m"
-printf "\n"
 
 # Create DB if needed
 RECORDING_DISABLED=$(grep RECORDING_DISABLED .env | cut -d '=' -f2)
@@ -31,8 +32,8 @@ fi
 # Make systemD
 echo -e "\e[36mCreate systemd daemon ?(Y/n) :\e[39m"
 read MK_SYSTEMD
-if [[ "$MK_SYSTEMD" == "y" ]] || [[ "$MK_SYSTEMD" == "Y" ]]; || [[ -z "$MK_SYSTEMD"]]; then
-  ./init-scripts/arawa-create-systemd.sh $ARG_SYSTEMD
+if [[ "$MK_SYSTEMD" == "y" ]] || [[ "$MK_SYSTEMD" == "Y" ]] || [[ -z $MK_SYSTEMD ]]; then
+  bash ./init-scripts/arawa-create-systemd.sh $ARG_SYSTEMD
 fi
 
 # Final test
