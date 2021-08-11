@@ -37,6 +37,8 @@ if [[ "$MK_SYSTEMD" == "y" ]] || [[ "$MK_SYSTEMD" == "Y" ]] || [[ -z $MK_SYSTEMD
 fi
 
 # Final test
+sleep 5
+
 URL_HOST=$(grep URL_HOST .env | cut -d '=' -f2)
 echo -e "\e[36mTesting the API...\e[39m"
 curl https://$URL_HOST/bigbluebutton/api/
