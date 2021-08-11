@@ -25,7 +25,7 @@ echo URL_HOST=$SH_HOSTNAME >> .env
 printf "\n" >> .env
 echo "#/***** SCALELITE SPECIFIC ******/#" >> .env
 SECRET_KEY_BASE=$(openssl rand -hex 64)
-LOADBALANCER_SECRET=$(openssl rand -hex 64)
+LOADBALANCER_SECRET=$(openssl rand -hex 32)
 echo SECRET_KEY_BASE=$SECRET_KEY_BASE >> .env
 echo LOADBALANCER_SECRET=$LOADBALANCER_SECRET >> .env
 
