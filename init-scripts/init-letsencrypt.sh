@@ -1,11 +1,5 @@
 #!/bin/bash
 
-COMPOSE=""
-read -p "Set usage of recording compose file ? (y/N) " decision
-if [ "$decision" != "Y" ] && [ "$decision" != "y" ]; then
-	COMPOSE=" --file docker-compose.recording.yml"
-fi
-
 if ! [ -x "$(command -v docker-compose)" ]; then
   echo 'Error: docker-compose is not installed.' >&2
   exit 1
@@ -16,6 +10,13 @@ if [[ ! -f ./.env ]]; then
   exit 1
 fi
 source ./.env
+
+RECORDING_DISABLED=$(grep RECORDING_DISABLED .env | cut -d '=' -f2)
+if [[ "$RECORDING_DISABLED" == true ]]; then
+  COMPOSE=" "
+else
+  COMPOSE=" --file docker-compose.recording.yml"
+fi
 
 URL_HOST=$(grep URL_HOST .env | cut -d '=' -f2)
 echo $URL_HOST
