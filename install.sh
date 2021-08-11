@@ -39,4 +39,4 @@ fi
 # Final test
 URL_HOST=$(grep URL_HOST .env | cut -d '=' -f2)
 echo -e "\e[36mTesting the API...\e[39m"
-curl https://$URL_HOST/bigbluebutton/api
+curl https://$URL_HOST/bigbluebutton/api/
