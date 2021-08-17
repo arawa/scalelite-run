@@ -1,12 +1,12 @@
 #!bin/bash
 
 # ##################################################
-# NGINX_HOSTNAME=bbb-aura-scalelite.visio.education.fr
-# URL_HOST=bbb-aura-scalelite.visio.education.fr
+# NGINX_HOSTNAME=
+# URL_HOST=
 
 # #/***** SCALELITE SPECIFIC ******/#
-# SECRET_KEY_BASE=0d2157deee7385a1ad5d62a506dc4ee31226c06744370c296ba28329a70d736a6c8a722bd1776be59d923fd760b7c9decb6d1af0db0bd9e62f4068a8c795375f
-# LOADBALANCER_SECRET=19eb07012fe918d9b9842884e714ae0354b77db3a803e3a93d22671d781dab29a4c11ae0b68f873596b1069e57f87d8eeef7cc8522837c9022a4d851e7e2f473
+# SECRET_KEY_BASE=
+# LOADBALANCER_SECRET=
 # SCALELITE_TAG=v1.1.6
 # WEB_CONCURRENCY=8
 # POLLER_THREADS=20
