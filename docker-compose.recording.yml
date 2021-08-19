@@ -90,7 +90,7 @@ services:
       - RECORDING_DISABLED=${RECORDING_DISABLED-false}
       - SERVER_ID_IS_HOSTNAME=${SERVER_ID_IS_HOSTNAME-false}
       - PROTECTED_RECORDINGS_ENABLED=${PROTECTED_RECORDINGS_ENABLED-false}
-      - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT}
+      - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT-true}
     volumes:
       - ./log/scalelite-api/:/srv/scalelite/log/
       - ${SCALELITE_RECORDING_DIR-/mnt/scalelite-recordings/var/bigbluebutton}:/var/bigbluebutton
@@ -109,7 +109,7 @@ services:
     environment:
       - REDIS_URL=${REDIS_URL:-redis://redis:6379}
       - SERVER_ID_IS_HOSTNAME=${SERVER_ID_IS_HOSTNAME-false}
-      - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT}
+      - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT-true}
     volumes:
       - ./log/scalelite-poller/:/app/log
     command: /bin/sh -c "bin/start-poller"
@@ -128,7 +128,7 @@ services:
       - DATABASE_URL=${DATABASE_URL:-postgres://postgres:password@postgres:5432/scalelite?pool=5}
       - RECORDING_DISABLED=false
       - PROTECTED_RECORDINGS_ENABLED=${PROTECTED_RECORDINGS_ENABLED-false}
-      - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT}
+      - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT-true}
     volumes:
       - ./log/scalelite-recording-importer/:/app/log
       - ${SCALELITE_RECORDING_DIR-/mnt/scalelite-recordings/var/bigbluebutton}:/var/bigbluebutton
