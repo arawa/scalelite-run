@@ -29,13 +29,14 @@ LOADBALANCER_SECRET=$(openssl rand -hex 32)
 echo SECRET_KEY_BASE=$SECRET_KEY_BASE >> .env
 echo LOADBALANCER_SECRET=$LOADBALANCER_SECRET >> .env
 
-echo -e "\e[36mScalelite tag version (default: 1.1.6) :\e[39m"
+echo -e "\e[36mScalelite tag version (default: 1.1.7.1) :\e[39m"
 read SCALELITE_TAG
 if [[ -z $SCALELITE_TAG ]]; then
-  SCALELITE_TAG="1.1.6"
+  SCALELITE_TAG="1.1.7.1"
 fi
-echo SCALELITE_TAG=v$SCALELITE_TAG >> .env
 
+printf "\n" >> .env
+echo "# Number of threads for the Puma Web server to launch at startup" >> .env
 echo -e "\e[36mWEB_CONCURRENCY (default: 8) :\e[39m"
 read WEB_CONCURRENCY
 if [[ -z "$WEB_CONCURRENCY" ]]; then
@@ -43,12 +44,62 @@ if [[ -z "$WEB_CONCURRENCY" ]]; then
 fi
 echo WEB_CONCURRENCY=$WEB_CONCURRENCY >> .env
 
-echo -e "\e[36mPOLLER_THREADS (default: 20) :\e[39m"
+printf "\n" >> .env
+echo "# Number of poller concurrent threads" >> .env
+echo "# Raising POLLER_THREADS can lead to DNS Denials Of Service" >> .env
+echo -e "\e[36mPOLLER_THREADS (default: 10) :\e[39m"
 read POLLER_THREADS
 if [[ -z "$POLLER_THREADS" ]]; then
-  POLLER_THREADS=20
+  POLLER_THREADS=10
 fi
 echo POLLER_THREADS=$POLLER_THREADS >> .env
+
+printf "\n" >> .env
+echo "# Interval between two poller runs" >> .env
+echo -e "\e[36mPOLL_INTERVAL (default: 60) :\e[39m"
+read POLL_INTERVAL
+if [[ -z "$POLL_INTERVAL" ]]; then
+  POLL_INTERVAL=60
+fi
+echo POLL_INTERVAL=$POLL_INTERVAL >> .env
+
+printf "\n" >> .env
+echo "# Timeout for the entire poller run to complete" >> .env
+echo -e "\e[36mPOLLER_WAIT_TIMEOUT (default: 100) :\e[39m"
+read POLLER_WAIT_TIMEOUT
+if [[ -z "$POLLER_WAIT_TIMEOUT" ]]; then
+  POLLER_WAIT_TIMEOUT=100
+fi
+echo POLLER_WAIT_TIMEOUT=$POLLER_WAIT_TIMEOUT >> .env
+
+printf "\n" >> .env
+echo "# Timeout (in seconds) for establishing a connection to BBB servers" >> .env
+echo "# Reduce CONNECT_TIMEOUT to 2 (seconds) so that polling goes faster (POLLER_THREADS servers every max CONNECT_TIMEOUT seconds)" >> .env
+echo "# For example : For 150 servers, 10 every max 2 seconds : 30 seconds MAX" >> .env
+echo -e "\e[36mCONNECT_TIMEOUT (default: 2) :\e[39m"
+read CONNECT_TIMEOUT
+if [[ -z "$CONNECT_TIMEOUT" ]]; then
+  CONNECT_TIMEOUT=20
+fi
+echo CONNECT_TIMEOUT=$CONNECT_TIMEOUT >> .env
+
+printf "\n" >> .env
+echo "# Timeout (in seconds) for getting a response from BBB server API" >> .env
+echo -e "\e[36mRESPONSE_TIMEOUT (default: 10) :\e[39m"
+read RESPONSE_TIMEOUT
+if [[ -z "$RESPONSE_TIMEOUT" ]]; then
+  RESPONSE_TIMEOUT=10
+fi
+echo CONNECT_TIMEOUT=$CONNECT_TIMEOUT >> .env
+
+printf "\n" >> .env
+echo "# Number of times a server is detected as unresponsive before panicking it and tagging it ''offline''" >> .env
+echo -e "\e[36mSERVER_UNHEALTHY_THRESHOLD (default: 2) :\e[39m"
+read SERVER_UNHEALTHY_THRESHOLD
+if [[ -z "$SERVER_UNHEALTHY_THRESHOLD" ]]; then
+  SERVER_UNHEALTHY_THRESHOLD=10
+fi
+echo SERVER_UNHEALTHY_THRESHOLD=$SERVER_UNHEALTHY_THRESHOLD >> .env
 
 echo SERVER_ID_IS_HOSTNAME=true >> .env
 
