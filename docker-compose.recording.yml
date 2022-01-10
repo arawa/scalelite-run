@@ -1,8 +1,18 @@
 version: '3'
 
 volumes:
-  postgres-data:
-  redis-data:
+  postgres-data-dev:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${DOCKER_VOL_POSTGRES_DATA}'
+  redis-data-dev:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${DOCKER_VOL_REDIS_DATA}'
 
 services:
   postgres:
@@ -36,6 +46,8 @@ services:
 
   scalelite-proxy:
     image: nginx:1.18
+# Custom nginx with amazonlinux
+#    image: blindsidenetwks/nginx:amazonlinux
     container_name: scalelite-proxy
     restart: unless-stopped
     ports:
@@ -77,6 +89,10 @@ services:
       - DATABASE_URL=${DATABASE_URL:-postgres://postgres:password@postgres:5432/scalelite?pool=5}
       - RECORDING_DISABLED=${RECORDING_DISABLED-false}
       - SERVER_ID_IS_HOSTNAME=${SERVER_ID_IS_HOSTNAME-false}
+<<<<<<< HEAD
+=======
+      - PROTECTED_RECORDINGS_ENABLED=${PROTECTED_RECORDINGS_ENABLED-false}
+>>>>>>> jfederico-master
       - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT-true}
     volumes:
       - ./log/scalelite-api/:/srv/scalelite/log/
@@ -114,6 +130,10 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL:-postgres://postgres:password@postgres:5432/scalelite?pool=5}
       - RECORDING_DISABLED=false
+<<<<<<< HEAD
+=======
+      - PROTECTED_RECORDINGS_ENABLED=${PROTECTED_RECORDINGS_ENABLED-false}
+>>>>>>> jfederico-master
       - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT-true}
     volumes:
       - ./log/scalelite-recording-importer/:/app/log
