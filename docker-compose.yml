@@ -45,7 +45,7 @@ services:
       - NGINX_HOSTNAME=${URL_HOST:-xlab.blindside-dev.com}
     volumes:
       - ./log/proxy-nginx/:/var/log/nginx
-      - ./data/proxy/nginx/sites.template.${DOCKER_PROXY_NGINX_TEMPLATE:-scalelite-proxy}:/etc/nginx/sites.template
+      - ./data/proxy/nginx/sites.template.${DOCKER_PROXY_NGINX_TEMPLATE:-scalelite-proxy-protected}:/etc/nginx/sites.template
       - ./data/proxy/nginx/sites-common:/etc/nginx/sites-common
       - ./data/arawa/cert:/etc/ssl
       #- ./data/certbot/conf/:/etc/letsencrypt

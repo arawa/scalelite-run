@@ -13,7 +13,7 @@
 # SCALELITE_DOCKER_IMAGE=blindsidenetwks/scalelite:v1.1.6
 # RECORDING_DISABLED=true
 # SERVER_ID_IS_HOSTNAME=true
-# DOCKER_PROXY_NGINX_TEMPLATE=scalelite-proxy
+# DOCKER_PROXY_NGINX_TEMPLATE=scalelite-proxy-protected
 # #####################################################
 
 echo "#/***** General ******/#" > .env
@@ -29,10 +29,10 @@ LOADBALANCER_SECRET=$(openssl rand -hex 32)
 echo SECRET_KEY_BASE=$SECRET_KEY_BASE >> .env
 echo LOADBALANCER_SECRET=$LOADBALANCER_SECRET >> .env
 
-echo -e "\e[36mScalelite tag version (default: 1.1.7.1) :\e[39m"
+echo -e "\e[36mScalelite tag version (default: 1.3.2) :\e[39m"
 read SCALELITE_TAG
 if [[ -z $SCALELITE_TAG ]]; then
-  SCALELITE_TAG="1.1.7.1"
+  SCALELITE_TAG="1.3.2"
 fi
 
 printf "\n" >> .env
@@ -118,7 +118,7 @@ echo "#/***** DOCKER ******/#" >> .env
 echo SCALELITE_DOCKER_IMAGE=blindsidenetwks/scalelite:v$SCALELITE_TAG >> .env
 
 if [[ "$RECORDING_DISABLED" == true ]]; then
-  DOCKER_PROXY_NGINX_TEMPLATE=scalelite-proxy
+  DOCKER_PROXY_NGINX_TEMPLATE=scalelite-proxy-protected
 else
   DOCKER_PROXY_NGINX_TEMPLATE=scalelite-recording
 fi

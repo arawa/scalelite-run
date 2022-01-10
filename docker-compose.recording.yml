@@ -57,7 +57,7 @@ services:
       - NGINX_HOSTNAME=${URL_HOST:-xlab.blindside-dev.com}
     volumes:
       - ./log/proxy-nginx/:/var/log/nginx
-      - ./data/proxy/nginx/sites.template.${DOCKER_PROXY_NGINX_TEMPLATE:-scalelite-proxy}:/etc/nginx/sites.template
+      - ./data/proxy/nginx/sites.template.${DOCKER_PROXY_NGINX_TEMPLATE:-scalelite-proxy-protected}:/etc/nginx/sites.template
       - ./data/proxy/nginx/sites-common:/etc/nginx/sites-common
       - ./data/arawa/cert:/etc/ssl
       - ./data/certbot/conf/:/etc/letsencrypt
@@ -89,10 +89,7 @@ services:
       - DATABASE_URL=${DATABASE_URL:-postgres://postgres:password@postgres:5432/scalelite?pool=5}
       - RECORDING_DISABLED=${RECORDING_DISABLED-false}
       - SERVER_ID_IS_HOSTNAME=${SERVER_ID_IS_HOSTNAME-false}
-<<<<<<< HEAD
-=======
       - PROTECTED_RECORDINGS_ENABLED=${PROTECTED_RECORDINGS_ENABLED-false}
->>>>>>> jfederico-master
       - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT-true}
     volumes:
       - ./log/scalelite-api/:/srv/scalelite/log/
@@ -130,10 +127,7 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL:-postgres://postgres:password@postgres:5432/scalelite?pool=5}
       - RECORDING_DISABLED=false
-<<<<<<< HEAD
-=======
       - PROTECTED_RECORDINGS_ENABLED=${PROTECTED_RECORDINGS_ENABLED-false}
->>>>>>> jfederico-master
       - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT-true}
     volumes:
       - ./log/scalelite-recording-importer/:/app/log
