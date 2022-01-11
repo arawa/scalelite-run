@@ -10,7 +10,7 @@ OPTIONS
   -h <scalelite-hostname>          Configure server with <scalelite-hostname> (required)
   -u <scalelite-username>          Scalelite username <scalelite-username> (optional)
   -p <scalelite-ssh-port>          SSH port in Scalelite server <scalelite-ssh-port> (optional)
-  -r <scalelite-ssh-port>          File wiht id_rsa private key to be used to ssh into Scalelite server <scalelite-id_rsa> (optional)
+  -r <id_rsa-file>          File with id_rsa private key to be used to ssh into Scalelite server <scalelite-id_rsa> (optional)
 EXAMPLES:
 Sample options for setup a BigBlueButton server
     -s scalelite.example.com
@@ -23,7 +23,7 @@ exit 0
 
 main() {
   export DEBIAN_FRONTEND=noninteractive
-  while builtin getopts "s:u:p" opt "${@}"; do
+  while builtin getopts "h:u:p:r" opt "${@}"; do
 
     case $opt in
       s)
