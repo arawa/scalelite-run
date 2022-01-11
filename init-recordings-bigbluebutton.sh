@@ -26,7 +26,7 @@ main() {
   while builtin getopts "h:u:p:r" opt "${@}"; do
 
     case $opt in
-      s)
+      h)
         HOST=$OPTARG
         if [ "$HOST" == "scalelite.example.com" ]; then
           err "You must specify a valid hostname (not the hostname given in the docs)."
