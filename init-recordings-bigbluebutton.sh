@@ -134,7 +134,8 @@ if [ -f "$POST_PUBLISH_DIR/scalelite_post_publish.rb" ]; then
    echo "file $POST_PUBLISH_DIR/scalelite_post_publish.rb exists"
    rm $POST_PUBLISH_DIR/scalelite_post_publish.rb
 fi
-wget -O post_publish_scalelite.rb -P $POST_PUBLISH_DIR https://raw.githubusercontent.com/blindsidenetworks/scalelite/master/bigbluebutton/scalelite_post_publish.rb
+wget -P $POST_PUBLISH_DIR https://raw.githubusercontent.com/blindsidenetworks/scalelite/master/bigbluebutton/scalelite_post_publish.rb
+chmod +x $POST_PUBLISH_DIR/scalelite_post_publish.rb
 
 echo 'Add recording transfer settings...'
 CORE_SCRIPTS_DIR=/usr/local/bigbluebutton/core/scripts
