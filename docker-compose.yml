@@ -118,7 +118,6 @@ services:
   #  volumes:
   #    - ./log/scalelite-recording-importer/:/app/log
   #    - ${SCALELITE_RECORDING_DIR-/mnt/scalelite-recordings/var/bigbluebutton}:/var/bigbluebutton
-  #    - ${SCALELITE_RECORDING_DIR-/mnt/scalelite-recordings/var/bigbluebutton}/spool:/var/bigbluebutton/spool
   #  command: /bin/sh -c "bin/start-recording-importer"
   #  depends_on:
   #    - scalelite-api
