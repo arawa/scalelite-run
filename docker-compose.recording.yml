@@ -42,7 +42,7 @@ services:
       - ./log/certbot/:/var/log/letsencrypt
       - ./data/certbot/conf/:/etc/letsencrypt
       - ./data/certbot/www/:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait ${!}; done;'"
 
   scalelite-proxy:
     image: nginx:1.18
