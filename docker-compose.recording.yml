@@ -1,18 +1,8 @@
 version: '3'
 
 volumes:
-  postgres-data-dev:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '${DOCKER_VOL_POSTGRES_DATA}'
-  redis-data-dev:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '${DOCKER_VOL_REDIS_DATA}'
+  postgres-data:
+  redis-data:
 
 services:
   postgres:
