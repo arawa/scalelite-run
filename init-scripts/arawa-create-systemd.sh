@@ -18,9 +18,9 @@ After=docker.service
 Type=oneshot
 RemainAfterExit=true
 WorkingDirectory=/root/scalelite
-ExecStart=/usr/local/bin/docker-compose ${COMPOSE} up -d --remove-orphans
+ExecStart=/usr/bin/docker compose ${COMPOSE} up -d --remove-orphans
 
-ExecStop=/usr/local/bin/docker-compose down
+ExecStop=/usr/bin/docker compose ${COMPOSE} down
 
 [Install]
 WantedBy=multi-user.target
