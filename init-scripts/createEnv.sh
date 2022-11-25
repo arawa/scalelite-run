@@ -120,7 +120,8 @@ echo SCALELITE_DOCKER_IMAGE=blindsidenetwks/scalelite:v$SCALELITE_TAG >> .env
 if [[ "$RECORDING_DISABLED" == true ]]; then
   DOCKER_PROXY_NGINX_TEMPLATE=scalelite-proxy-protected
 else
-  DOCKER_PROXY_NGINX_TEMPLATE=scalelite-recording
+  #DOCKER_PROXY_NGINX_TEMPLATE=scalelite-recording
+  DOCKER_PROXY_NGINX_TEMPLATE=scalelite-proxy-protected
 fi
 echo DOCKER_PROXY_NGINX_TEMPLATE=$DOCKER_PROXY_NGINX_TEMPLATE >> .env
 
