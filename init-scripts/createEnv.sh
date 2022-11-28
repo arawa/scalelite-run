@@ -79,7 +79,7 @@ echo "# For example : For 150 servers, 10 every max 2 seconds : 30 seconds MAX" 
 echo -e "\e[36mCONNECT_TIMEOUT (default: 2) :\e[39m"
 read CONNECT_TIMEOUT
 if [[ -z "$CONNECT_TIMEOUT" ]]; then
-  CONNECT_TIMEOUT=20
+  CONNECT_TIMEOUT=2
 fi
 echo CONNECT_TIMEOUT=$CONNECT_TIMEOUT >> .env
 
@@ -90,7 +90,7 @@ read RESPONSE_TIMEOUT
 if [[ -z "$RESPONSE_TIMEOUT" ]]; then
   RESPONSE_TIMEOUT=10
 fi
-echo CONNECT_TIMEOUT=$CONNECT_TIMEOUT >> .env
+echo RESPONSE_TIMEOUT=$RESPONSE_TIMEOUT >> .env
 
 printf "\n" >> .env
 echo "# Number of times a server is detected as unresponsive before panicking it and tagging it ''offline''" >> .env
