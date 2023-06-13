@@ -1,11 +1,4 @@
 #!/bin/bash
-COMPOSE=""
-if [ "$1" == "storage" ]; then
-    echo "Setting with storage option"
-	COMPOSE=" --file docker-compose.recording.yml"
-else
-    echo "Setting without storage option"
-fi
 echo "
 [Unit]
 Description=Scalelite
@@ -18,9 +11,9 @@ After=docker.service
 Type=oneshot
 RemainAfterExit=true
 WorkingDirectory=/root/scalelite
-ExecStart=/usr/bin/docker compose ${COMPOSE} up -d --remove-orphans
+ExecStart=/usr/bin/docker compose up -d --remove-orphans
 
-ExecStop=/usr/bin/docker compose ${COMPOSE} down
+ExecStop=/usr/bin/docker compose down
 
 [Install]
 WantedBy=multi-user.target

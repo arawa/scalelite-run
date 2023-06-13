@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if ! [ -x "$(command -v docker-compose)" ]; then
-  echo 'Error: docker-compose is not installed.' >&2
-  exit 1
-fi
-
 if [[ ! -f ./.env ]]; then
   echo ".env file does not exist on your filesystem."
   exit 1
@@ -46,7 +41,7 @@ fi
 echo "### Creating dummy certificate for $domains ..."
 path="/etc/letsencrypt/live/$domains"
 mkdir -p "$data_path/conf/live/$domains"
-docker-compose ${COMPOSE} run --rm --entrypoint "\
+docker compose ${COMPOSE} run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa:1024 -days 1\
     -keyout '$path/privkey.pem' \
     -out '$path/fullchain.pem' \
@@ -55,11 +50,11 @@ echo
 
 
 echo "### Starting scalelite-proxy ..."
-docker-compose ${COMPOSE} up --force-recreate -d scalelite-proxy
+docker compose ${COMPOSE} up --force-recreate -d scalelite-proxy
 echo
 
 echo "### Deleting dummy certificate for $domains ..."
-docker-compose ${COMPOSE} run --rm --entrypoint "\
+docker compose ${COMPOSE} run --rm --entrypoint "\
   rm -Rf /etc/letsencrypt/live/$domains && \
   rm -Rf /etc/letsencrypt/archive/$domains && \
   rm -Rf /etc/letsencrypt/renewal/$domains.conf" certbot
@@ -82,7 +77,7 @@ esac
 # Enable staging mode if needed
 if [ $staging != "0" ]; then staging_arg="--staging"; fi
 
-docker-compose ${COMPOSE} run --rm --entrypoint "\
+docker compose ${COMPOSE} run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
     $staging_arg \
     $email_arg \
@@ -94,4 +89,4 @@ docker-compose ${COMPOSE} run --rm --entrypoint "\
 echo
 
 echo "### Reloading scalelite-proxy ..."
-docker-compose ${COMPOSE} exec scalelite-proxy nginx -s reload
+docker compose ${COMPOSE} exec scalelite-proxy nginx -s reload
