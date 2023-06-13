@@ -29,10 +29,10 @@ LOADBALANCER_SECRET=$(openssl rand -hex 32)
 echo SECRET_KEY_BASE=$SECRET_KEY_BASE >> .env
 echo LOADBALANCER_SECRET=$LOADBALANCER_SECRET >> .env
 
-echo -e "\e[36mScalelite tag version (default: 1.3.2) :\e[39m"
+echo -e "\e[36mScalelite tag version (default: 1.5.1) :\e[39m"
 read SCALELITE_TAG
 if [[ -z $SCALELITE_TAG ]]; then
-  SCALELITE_TAG="1.3.2"
+  SCALELITE_TAG="1.5.1"
 fi
 
 printf "\n" >> .env
@@ -103,6 +103,24 @@ echo SERVER_UNHEALTHY_THRESHOLD=$SERVER_UNHEALTHY_THRESHOLD >> .env
 
 echo SERVER_ID_IS_HOSTNAME=true >> .env
 
+echo -e "\e[36mEnable multi-tenancy feature ? (y/N) :\e[39m"
+read MULTITENANCY_ENABLED
+if [[ "$MULTITENANCY_ENABLED" == "N" ]] || [[ "$MULTITENANCY_ENABLED" == "n" ]] || [[ -z "$MULTITENANCY_ENABLED" ]]; then
+  MULTITENANCY_ENABLED=false
+else
+  MULTITENANCY_ENABLED=true
+fi
+echo MULTITENANCY_ENABLED=$MULTITENANCY_ENABLED >> .env
+
+
+printf "\n" >> .env
+echo "#/***** DOCKER ******/#" >> .env
+
+echo SCALELITE_DOCKER_IMAGE=blindsidenetwks/scalelite:v$SCALELITE_TAG >> .env
+
+printf "\n" >> .env
+echo "#/***** Recordings ******/#" >> .env
+
 echo -e "\e[36mEnable recording feature ? (Y/n) :\e[39m"
 read RECORDING_DISABLED
 if [[ "$RECORDING_DISABLED" == "Y" ]] || [[ "$RECORDING_DISABLED" == "y" ]]|| [[ -z "$RECORDING_DISABLED" ]]; then
@@ -112,10 +130,16 @@ else
 fi
 echo RECORDING_DISABLED=$RECORDING_DISABLED >> .env
 
-printf "\n" >> .env
-echo "#/***** DOCKER ******/#" >> .env
-
-echo SCALELITE_DOCKER_IMAGE=blindsidenetwks/scalelite:v$SCALELITE_TAG >> .env
+if [[ "$RECORDING_DISABLED" == false ]]; then
+  echo -e "\e[36mEnable protected recordings feature ? (y/N) :\e[39m"
+  read PROTECTED_RECORDINGS_ENABLED
+  if [[ "$PROTECTED_RECORDINGS_ENABLED" == "N" ]] || [[ "$PROTECTED_RECORDINGS_ENABLED" == "n" ]] || [[ -z "$PROTECTED_RECORDINGS_ENABLED" ]]; then
+    PROTECTED_RECORDINGS_ENABLED=false
+  else
+    PROTECTED_RECORDINGS_ENABLED=true
+  fi
+  echo PROTECTED_RECORDINGS_ENABLED=$PROTECTED_RECORDINGS_ENABLED >> .env
+fi
 
 if [[ "$RECORDING_DISABLED" == true ]]; then
   DOCKER_PROXY_NGINX_TEMPLATE=scalelite-proxy-protected
